@@ -49,11 +49,11 @@ class ProductBatchPriceWizard(models.TransientModel):
             rate = 1
             if po_id.currency_id.id != self.env.company.currency_id.id:
                 rate_obj = self.env['res.currency.rate']
-                rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '=', fields.Date.to_string(po_id.date_order)),
+                rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '=', fields.Date.to_string(po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)])
                 rate = rate.inverse_company_rate
                 if rate == 0:
-                    rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '<', fields.Date.to_string(po_id.date_order)),
+                    rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '<', fields.Date.to_string(po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)], limit=1)
                     rate = rate.inverse_company_rate
             for po_line in po_id.order_line:
@@ -86,11 +86,11 @@ class ProductBatchPriceWizard(models.TransientModel):
             po_id = self.env['purchase.order'].search([('name','=',pick.origin)])
             if po_id.currency_id.id != self.env.company.currency_id.id:
                 rate_obj = self.env['res.currency.rate']
-                rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '=', fields.Date.to_string(po_id.date_order)),
+                rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '=', fields.Date.to_string(po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)])
                 rate = rate.inverse_company_rate
                 if rate == 0.0:
-                    rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '<', fields.Date.to_string(po_id.date_order)),
+                    rate = rate_obj.search([('currency_id', '=', po_id.currency_id.id), ('name', '<', fields.Date.to_string(po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)], limit=1)
                     rate = rate.inverse_company_rate
             else:
@@ -104,11 +104,11 @@ class ProductBatchPriceWizard(models.TransientModel):
             pick_po_id = self.env['purchase.order'].search([('name','=',picking.origin)])
             if pick_po_id.currency_id.id != self.env.company.currency_id.id:
                 rate_obj = self.env['res.currency.rate']
-                po_rate = rate_obj.search([('currency_id', '=', pick_po_id.currency_id.id), ('name', '=', fields.Date.to_string(pick_po_id.date_order)),
+                po_rate = rate_obj.search([('currency_id', '=', pick_po_id.currency_id.id), ('name', '=', fields.Date.to_string(pick_po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)])
                 po_rate = po_rate.inverse_company_rate
                 if po_rate == 0.0:
-                    po_rate = rate_obj.search([('currency_id', '=', pick_po_id.currency_id.id), ('name', '<', fields.Date.to_string(pick_po_id.date_order)),
+                    po_rate = rate_obj.search([('currency_id', '=', pick_po_id.currency_id.id), ('name', '<', fields.Date.to_string(pick_po_id.date_approve)),
                             ('company_id', '=', self.env.company.id)], limit=1)
                     po_rate = po_rate.inverse_company_rate
             else:

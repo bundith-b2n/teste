@@ -41,10 +41,11 @@
             </xpath>
 
             <xpath expr="//field[@name='seller_ids']" position="after">
-                <field name="landed_cost_history_ids" readonly="1">
+                <field name="landed_cost_history_ids">
                     <tree string="Landed Cost">
+                        <field name="create_date" string="Create date"></field>
                         <field name="po_id"></field>
-                        <field name="date"></field>
+                        <field name="date" string="PO date" optional="hide"></field>
                         <field name="rate" optional="hide"></field>
                         <field name="currency" optional="show"></field>
                         <field name="order_cost" optional="show"></field>
@@ -57,6 +58,14 @@
                         <field name="final_new_cost" optional="show"></field>
                     </tree>
                 </field>
+                <group>
+                    <group name="last_po" string="Last Purchase Order">
+                        <field name="last_po"/>
+                        <field name="last_order_cost"/>
+                        <field name="last_landed_cost"/>
+                        <field name="last_final_cost"/>
+                    </group>
+                </group>
             </xpath>
 
         </field>
@@ -85,7 +94,19 @@
         </field>
     </record>
      
-    
+    <record id="product_template_search_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.view.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <field name="categ_id" position="after">
+                <field name="last_po" string="Purchase Order" filter_domain="[('last_po', 'ilike', self)]"/>
+            </field>
+            <filter name="categ_id" position="after">
+                <filter string="Purchase Order" name="last_po" context="{'group_by':'last_po'}"/>
+            </filter>
+        </field>
+    </record>
 
     <record id="lod_country_import_view_tree" model="ir.ui.view">
         <field name="name">lod.country.import.view.tree</field>

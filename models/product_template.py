@@ -54,9 +54,11 @@ class ProductTemplate(models.Model):
     competitor_cost_5 = fields.Float('Competitor 5')
     competitor_perc_5 = fields.Float('Comp5(%)')
     last_update = fields.Datetime('Updated')
+    last_update_cost = fields.Datetime('Last Cost Updated')
     last_approved = fields.Datetime('Approved')
     price_status = fields.Selection([('pending', 'Pending'),
                                     ('approved', 'Approved'),
+                                    ('updated_cost', 'Cost Updated'),
                                     ('updated', 'Updated'),
                                     ('checked', 'Checked'),
                                     ], string='Status',
@@ -67,6 +69,26 @@ class ProductTemplate(models.Model):
     diff_cost_sale = fields.Float('Diff', compute='_compute_dif_sale_price')
     
     landed_cost_history_ids = fields.One2many('lod.landed.cost.history', 'product_template_id', string='Landed Cost History')
+    # last_purchase_order = fields.Many2one('purchase.order', 'Last Purchase Order', compute='_compute_purchase_order')
+    last_po = fields.Char('Last Purchase Order', compute='_compute_purchase_order', store=True)
+    last_order_cost = fields.Float('Last Order Cost', compute='_compute_purchase_order', digits=(16, 2), store=True)
+    last_landed_cost = fields.Float('Last Landed Cost', compute='_compute_purchase_order', digits=(16, 2), store=True)
+    last_final_cost = fields.Float('Last Final Cost', compute='_compute_purchase_order', digits=(16, 2), store=True)
+    
+    @api.depends('landed_cost_history_ids')
+    def _compute_purchase_order(self):
+        for rec in self:
+            rec.last_po = ''
+            rec.last_order_cost = 0
+            rec.last_landed_cost = 0
+            rec.last_final_cost = 0
+            if rec.landed_cost_history_ids.ids != []:
+                for po in rec.landed_cost_history_ids:
+                    rec.last_po = po[0].po_id.name
+                    rec.last_order_cost = po[0].order_cost 
+                    rec.last_landed_cost = po[0].landed_amount
+                    rec.last_final_cost = po[0].final_new_cost
+                    
 
     @api.depends('new_cost', 'final_sale_price', 'list_price')
     def _compute_dif_sale_price(self):
@@ -94,7 +116,10 @@ class ProductTemplate(models.Model):
 
     def action_update_new_cost(self):
         for rec in self:
-            rec.standard_price = self.roundup_amount(int(rec.new_cost))
+            # rec.standard_price = self.roundup_amount(int(rec.new_cost))
+            rec.standard_price = rec.new_cost
+            rec.price_status = 'updated_cost'
+            rec.last_update_cost = fields.Datetime.now()
     
     def action_approve_sale_price(self):
         for rec in self:
@@ -205,6 +230,7 @@ class MarginConfiguration(models.Model):
 class LandedCostHistory(models.Model):
     _name = "lod.landed.cost.history"
     _description = "Landed Cost History"
+    _order = 'id desc, '
 
     product_template_id = fields.Many2one('product.template', string='Product Template')
     name = fields.Char('Name')
