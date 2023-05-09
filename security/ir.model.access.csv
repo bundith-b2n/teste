@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_district,access.res.district,model_res_district,,1,1,1,1
+access_update_categories_wizard,update.categories.wizard,model_update_categories_wizard,,1,1,1,1
+access_unpack_wizard,unpack.wizard,model_unpack_wizard,,1,1,1,1
+access_unpack_line_wizard,unpack.line.wizard,model_unpack_line_wizard,,1,1,1,1
+access_res_partner_notice,res.partner.notice,model_res_partner_notice,,1,1,1,1
+access_lod_ib_transaction,lod.ib.transaction,model_lod_ib_transaction,,1,1,1,1
+access_lod_country_import,lod.country.import,model_lod_country_import,,1,1,1,1
+access_lod_margin_config,lod.margin.config,model_lod_margin_config,,1,1,1,1
+access_product_batch_price_wizard,product.batch.price.wizard,model_product_batch_price_wizard,,1,1,1,1
+access_product_landed_cost_line_wizard,product.landed.cost.line.wizard,model_product_landed_cost_line_wizard,,1,1,1,1
+access_lod_product_category_price_wizard,lod.product.category.price,model_lod_product_category_price,,1,1,1,1
+access_product_categ_batch_price_wizard_wizard,product.categ.batch.price.wizard,model_product_categ_batch_price_wizard,,1,1,1,1
+access_lod_landed_cost_history,lod.landed.cost.history,model_lod_landed_cost_history,,1,1,1,1

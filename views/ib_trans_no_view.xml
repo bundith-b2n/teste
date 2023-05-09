@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lod_ib_transaction_view_tree" model="ir.ui.view">
+        <field name="name">lod.ib.transaction.view.tree</field>
+        <field name="model">lod.ib.transaction</field>
+        <field name="arch" type="xml">
+            <tree string="IB Transaction">
+                <field name="name" />
+                <field name="receive_order_no" />
+                <field name="date" />
+                <field name="phone" />
+                <field name="branch_id" />
+                <field name="pos_id" />
+                <field name="amount" />
+            </tree>
+        </field>
+    </record>
+    <record id="lod_ib_transaction_view_form" model="ir.ui.view">
+        <field name="name">lod.ib.transaction.view.form</field>
+        <field name="model">lod.ib.transaction</field>
+        <field name="arch" type="xml">
+            <form string="IB Transaction">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="receive_order_no" />
+                            <field name="phone" />
+                            <field name="date" />
+                        </group>
+                        <group>
+                            <field name="branch_id" />
+                            <field name="pos_id" />
+                            <field name="amount" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="lod_ib_transaction_action" model="ir.actions.act_window">
+        <field name="name">IB Transaction</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lod.ib.transaction</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_ib_transaction"
+        action="lod_ib_transaction_action"
+        parent="point_of_sale.menu_point_rep"
+        sequence="10"/>
+</odoo>

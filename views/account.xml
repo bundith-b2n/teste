@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="inherit_account_journal_tree" model="ir.ui.view">
+        <field name="name">inherit.account.journal.tree</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_tree"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_main_wallet" />
+                <field name="is_branch_wallet" />
+            </field>
+        </field>
+    </record>
+    <record id="inherit_account_journal_form" model="ir.ui.view">
+        <field name="name">inherit.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="is_main_wallet"/>
+                <field name="is_branch_wallet" />
+                <field name="wallet_name" attrs="{'invisible': [('is_main_wallet', '!=', True),('is_branch_wallet', '!=', True)]}"/>
+                <field name="wallet_mobile" attrs="{'invisible': [('is_main_wallet', '!=', True),('is_branch_wallet', '!=', True)]}"/>
+                <field name="merchant_id" attrs="{'invisible': [('is_main_wallet', '!=', True),('is_branch_wallet', '!=', True)]}"/>
+            </field>
+        </field>
+    </record>
+    
+    <menuitem
+        id="currencies_menu_item"
+        name="Currencies"
+        action="base.action_currency_form"
+        parent="account_accountant.menu_accounting"
+        sequence="21"/>
+
+</odoo>

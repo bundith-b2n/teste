@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_category_batch_sale_price_wizard_form" model="ir.ui.view">
+        <field name="name">product.categ.batch.price.wizard.form</field>
+        <field name="model">product.categ.batch.price.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Batch Sale Price Wizard">
+                <group>
+                    <field name="price_calc_option"/>
+                    <field name="pro_categ_ids" widget="many2many_tags" attrs="{'invisible': [('price_calc_option', '!=', 'prod_category')]}"/>
+                    <!-- <field name="country_import_ids" widget="many2many_tags"/> -->
+                </group>
+
+                <footer>
+                    <button name="action_confirm_calculate" string="Calculate New Sale Price" type="object"  class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>    
+    </record>
+
+    <record id="action_product_category_batch_sale_price_wizard" model="ir.actions.act_window">
+        <field name="name">Product Batch Sale Price Wizard</field>
+        <field name="res_model">product.categ.batch.price.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_product_category_batch_sale_price_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_product_batch_sale_price_wizard"
+        name="Product Batch Sale Price Wizard"
+        action="action_product_category_batch_sale_price_wizard"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="50"/>
+
+
+    <record id="lod_product_category_price_view_tree" model="ir.ui.view">
+        <field name="name">lod.product.category.price.view.tree</field>
+        <field name="model">lod.product.category.price</field>
+        <field name="arch" type="xml">
+            <tree string="Product Category Price">
+                <field name="name" />
+                <field name="categ_id" />
+                <field name="margin_percent" />
+            </tree>
+        </field>
+    </record>
+    <record id="lod_product_category_price_view_form" model="ir.ui.view">
+        <field name="name">lod.product.category.price.view.form</field>
+        <field name="model">lod.product.category.price</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="categ_id" />
+                        <field name="margin_percent" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="lod_product_category_price_action" model="ir.actions.act_window">
+        <field name="name">Product Category Price</field>
+        <field name="res_model">lod.product.category.price</field>
+        <field name="view_id" ref="lod_product_category_price_view_tree"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="menu_product_categ_price" name="Product Category Price" parent="stock.menu_product_in_config_stock" action="lod_product_category_price_action" sequence="10"/>
+
+</odoo>

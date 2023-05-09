@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_batch_price_view_tree" model="ir.ui.view">
+        <field name="name">product.template.batch.price.view.tree</field>
+        <field name="model">product.template</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <tree string="Product Batch Price" editable="top" create="1" delete="1" multi_edit="1" decoration-danger="dif_sale_price &lt; 0" decoration-info="dif_sale_price &gt; 0">
+                <field name="price_status" optional="show"/>
+                <field name="barcode" optional="show" readonly='1'/>
+                <field name="default_code" optional="hide" readonly='1'/>
+                <field name="name" optional="show" readonly='1'/>
+                <field name="categ_id" optional="hide" readonly='1'/>
+                <!-- <field name="packing_size" /> -->
+                <field name="seller_ids" widget='many2many_tags' optional="hide" readonly='1'/>
+                <field name="qty_available" readonly='1' optional="hide"/>
+                <field name="virtual_available" optional="hide" readonly='1'/>
+                <field name="uom_id" readonly='1' optional="hide"/>
+                <field name="country_import_id" readonly='1' optional="hide"/>
+                <field name="standard_price" optional="show" readonly='1' sum="Total Current Cost"/>
+                <field name="new_cost" optional="show" readonly='1' sum="Total New Cost"/>
+                <field name="margin_percent" readonly='1' optional="hide"/>
+                <field name="margin_amount" readonly='1' optional="hide" sum="Total Margin Amount"/>
+                <field name="markup_percent" readonly='1' optional="hide"/>
+                <field name="markup_amount" readonly='1' optional="hide"/>
+                <field name="list_price" optional="show" readonly='1' string="Cur.Sale Price" sum="Total Cur Sale" decoration-bf="list_price &gt; 0" decoration-success="list_price &gt; 0"/>
+                <field name="old_sale_price" optional="hide" string="Old Sale Price" sum="Total Old Sale Price"/>
+                <field name="final_sale_price" optional="show" string="New Sale Price" sum="Total New Sale Price"/>
+                <field name="dif_sale_price" optional="show" readonly='1' sum="Total Diff Sale Price"/>
+                <field name="dif_sale_percent" optional="show" readonly='1'/>
+                <field name="competitor_cost_1" optional="hide" string="JM" readonly='1'/>
+                <field name="competitor_cost_2" optional="hide" string="Sok" readonly='1'/>
+                <field name="competitor_cost_3" optional="hide" string="DM" readonly='1'/>
+                <field name="competitor_cost_4" optional="hide" string="RP" readonly='1'/>
+                <field name="competitor_cost_5" optional="hide" string="PS" readonly='1'/>
+                <field name="last_update" readonly='1' optional="hide"/>
+                <field name="last_approved" readonly='1' optional="hide"/>                
+            </tree>
+        </field>
+    </record>
+    <record id="product_template_batch_action" model="ir.actions.act_window">
+        <field name="name">Product Batch Price</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree</field>
+        <field name="view_ids" eval="[
+                (5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lod_kokkokm.product_template_batch_price_view_tree')})
+                ]"/>
+    </record>
+
+    <menuitem
+        id="product_batch_price_menu"
+        name="Product Batch Price"
+        action="product_template_batch_action"
+        parent="stock.menu_stock_inventory_control"
+        sequence="5"/>
+
+    <record id="action_update_sale_price" model="ir.actions.server">
+        <field name="name">Update Sale Price</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.action_update_sale_price()
+        </field>
+    </record>
+
+    <record id="action_update_new_cost" model="ir.actions.server">
+        <field name="name">Update New Cost</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.action_update_new_cost()
+        </field>
+    </record>
+
+
+    <record id="action_approve_sale_price" model="ir.actions.server">
+        <field name="name">Approve Sale Price</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.action_approve_sale_price()
+        </field>
+    </record>
+
+    <record id="action_update_competitor_price_product" model="ir.actions.server">
+        <field name="name">Update Competitor Price</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.action_update_competitor_price()
+        </field>
+    </record>
+
+    <record id="action_generate_code_sku" model="ir.actions.server">
+        <field name="name">Generate Code SKU</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+        if records:
+            records.action_generate_code_sku()
+        </field>
+    </record>
+
+</odoo>

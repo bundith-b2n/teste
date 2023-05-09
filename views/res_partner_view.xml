@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record id="lod_location_inherit_partner_address_view" model="ir.ui.view">
+      <field name="name">Location.Inherit.Partner.Address</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml"> 
+        
+        
+        <xpath expr="//field[@name='vat']" position="after">
+          <field name="register_channel" />
+          <field name="membership_level" />
+          <field name="doc_type" invisible="1"/>
+          <field name="ref_code" placeholder="Referent document" invisible="1"/>
+          <field name="business_license" placeholder="Business License" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='name']" position="attributes">
+            <attribute name="placeholder">Name En</attribute>
+        </xpath>
+        <xpath expr="//field[@name='state_id']" position="attributes">
+            <attribute name="placeholder">Province</attribute>
+        </xpath>
+        <xpath expr="//field[@name='city']" position="attributes">
+              <attribute name="placeholder">Village</attribute>
+        </xpath>
+        <xpath expr="//field[@name='zip']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='street']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        <xpath expr="//field[@name='street2']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='vat']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='title']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        
+        <xpath expr="//field[@name='function']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        
+        <xpath expr="//field[@name='category_id']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        
+        <xpath expr="//field[@name='lang']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//label[@for='lang']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+        
+        <xpath expr="//button[@name='%(base.res_lang_act_window)d']" position="attributes">
+          <attribute name="invisible">1</attribute>
+        </xpath>
+
+        <xpath expr="//div[@class='oe_title mb24']" position="after">
+          <group>
+            <group>
+              <field name="la_name" invisible="1"/>
+            </group>
+          </group>
+    </xpath>
+    <xpath expr="//field[@name='la_name']" position="before">
+      <field name="branch_id"/>
+    </xpath>
+<!--    <xpath expr="//field[@name='la_name']" position="after">-->
+<!--      <field name="birth_date"/>-->
+<!--      <field name="is_birthdate_month"/>-->
+<!--      <field name="gender"/>-->
+<!--    </xpath>-->
+    <xpath expr="//field[@name='city']" position="after">
+      <field name="district_id" placeholder="district" />
+    </xpath>
+   
+    <xpath expr="//field[@name='parent_id']" position="before">
+          <field name="la_name"  placeholder="Name Lao"/>
+    </xpath>
+    
+    <!-- <xpath expr="//field[@name='branch_id']" position="before">
+            <field name="phone"/>
+            <field name="mobile"/>
+            <field name="email"/>
+            <field name="website"/>
+    </xpath> -->
+
+        <xpath expr="//page[@name='internal_notes']" position="after">
+          <page name="notice" string="Notices">
+            <field name="notice_ids">
+              <tree>
+                <field name="date" />
+                <field name="phone" />
+                <field name="name" />
+                <field name="body" />
+              </tree>
+            </field>
+          </page>
+        </xpath>
+      </field>
+    </record>
+
+
+    <!-- contacts -->
+    <record id="res_district_view_tree" model="ir.ui.view">
+      <field name="name">res.district.view.tree</field>
+      <field name="model">res.district</field>
+      <field name="arch" type="xml">
+        <tree string="District">
+          <field name="code" />
+          <field name="name" />
+          <field name="province_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="res_district_view_form" model="ir.ui.view">
+      <field name="name">res.district.view.form</field>
+      <field name="model">res.district</field>
+      <field name="arch" type="xml">
+        <form string="District">
+          <sheet>
+            <group>
+              <field name="code" />
+              <field name="name" />
+              <field name="province_id" />
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="countries_district_action" model="ir.actions.act_window">
+      <field name="name">Districts</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">res.district</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+              Create New District!
+          </p>
+      </field>
+    </record>
+    <menuitem id="menu_district" 
+              action="countries_district_action" 
+              name="Districts" 
+              parent="contacts.menu_localisation" 
+              sequence="4" />
+    <!-- contacts -->
+  </data>
+
+</odoo>

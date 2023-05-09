@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="check_price_template" name="Check Price">
+        <t t-call="website.layout">
+            <style>
+                .o_header_standard {
+                    display: none;
+                }
+                .o_footer {
+                    display: none;
+                }
+                .o_main_navbar {
+                    display: none;
+                }
+            </style>
+            <div id="wrap" class="oe_structure oe_empty mt-4 mb-2">
+                <div class="container">
+                    <section class="s_website_form" data-vcss="001" data-snippet="s_website_form">
+                        <form t-attf-action="/check_product_price" class="w-100">
+                            <div class="row m-0">
+                                <div class="col-3 col-sm-1"></div>
+                                <div class="col-6 col-sm-8 p-1">
+                                    <input type="text" class="form-control" name="barcode" minlenght="3" placeholder="Search"/>
+                                </div>
+                                <div class="col-3 col-sm-3 p-1">
+                                    <button class="btn btn-info w-100" type="submit">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="card check_price">
+                            <div t-if="product_id" class="card-body border border-primary pt-0 pr-0 pl-1 pb-1">
+                                <div class="bg-primary text-center unit" style="float: right; width: 15%;">
+                                    <div class="font-weight-bold"><t t-esc="product_id.uom_id.name"/></div>
+                                </div>
+                                <div class='row m-0'>
+                                    <div class="col-lg-3 col-sm-12">
+                                        <div>
+                                            <img t-attf-src="data:image/*;base64,{{product_id.image_1920}}"
+                                                 t-att-alt="product_id.image_1920"
+                                                 style="width:100%"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-9 col-sm-12 p-1 detail">
+                                        <table>
+                                            <tr style="vertical-align: text-top;">
+                                                <td width="20%">Name:</td>
+                                                <td><t t-esc="product_id.name"/></td>
+                                            </tr>
+                                            <tr style="vertical-align: text-top;">
+                                                <td>Barcode:</td>
+                                                <td><t t-esc="product_id.barcode"/></td>
+                                            </tr>
+                                            <tr style="vertical-align: text-top;">
+                                                <td>Capacity:</td>
+                                                <td><t t-esc="product_id.unit" t-options='{"widget": "float", "precision": 2}'/> Pcs</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="pr-4 price" style="float: right;clear: both; color: #0d9127; font-weight: bold;">
+                                    <t t-esc="product_id.list_price" t-options='{"widget": "monetary", "display_currency": product_id.currency_id}'/>
+                                </div>
+                            </div>
+                            <t t-foreach="relation_ids" t-as="relation">
+                                <div class="card-body border border-primary pt-0 pr-0 pl-1 pb-1">
+                                    <div class="bg-primary text-center unit" style="float: right; width: 15%;">
+                                        <div class="font-weight-bold"><t t-esc="relation.uom_id.name"/></div>
+                                    </div>
+                                    <div class='row m-0'>
+                                        <div class="col-lg-3 col-sm-12">
+                                            <div>
+                                                <img t-attf-src="data:image/*;base64,{{relation.image_1920}}"
+                                                     t-att-alt="relation.image_1920"
+                                                     style="width:100%"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9 col-sm-12 p-1 detail">
+                                            <table>
+                                                <tr style="vertical-align: text-top;">
+                                                    <td width="20%">Name:</td>
+                                                    <td><t t-esc="relation.name"/></td>
+                                                </tr>
+                                                <tr style="vertical-align: text-top;">
+                                                    <td>Barcode:</td>
+                                                    <td><t t-esc="relation.barcode"/></td>
+                                                </tr>
+                                                <tr style="vertical-align: text-top;">
+                                                    <td>Capacity:</td>
+                                                    <td><t t-esc="relation.unit" t-options='{"widget": "float", "precision": 2}'/> Pcs</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="pr-4 price" style="float: right;clear: both; color: #0d9127; font-weight: bold;">
+                                        <t t-esc="relation.list_price" t-options='{"widget": "monetary", "display_currency": relation.currency_id}'/>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+                        
+                        
+                    </section>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

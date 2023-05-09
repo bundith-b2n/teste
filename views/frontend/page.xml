@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="check_price_page" model="ir.ui.view">
+        <field name="name">Check Price View</field>
+        <field name="type">qweb</field>
+        <field name="key">lod_kokkokm.check_price_page</field>
+        <field name="arch" type="xml">
+            <t name="Check Price View" priority="10" t-name="lod_kokkokm.check_price_page">
+                <t t-call="website.layout">
+                    <div id="oe_structure_pr_submit_page" class="oe_structure oe_empty"/>
+                    <p>Check Price View</p>
+                </t>
+            </t>
+        </field>
+    </record>
+    <record id="menu_check_price_page" model="website.page">
+        <field name="url">/check_product_price</field>
+        <field name="is_published">True</field>
+        <field name="view_id" ref="check_price_page"/>
+        <field name="cache_time">0</field>
+        <field name="track">True</field>
+    </record>
+
+    <!-- <record id="menu_check_price" model="website.menu">
+        <field name="name">Check Price</field>
+        <field name="url">/check_product_price</field>
+        <field name="parent_id" search="[('parent_id','=', False),('id','=', 4)]"/>
+        <field name="page_id" ref="lod_kokkokm.menu_check_price_page"/>
+        <field name="sequence" type="int">10</field>
+        <field name="website_id" ref="website.default_website"/>
+    </record> -->
+</odoo>

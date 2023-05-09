@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_from_view_inherit" model="ir.ui.view">
+        <field name="name">product.category.form.view.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('oe_title')]" position="before">
+            </xpath>
+            <xpath expr="//group[@name='first']" position="after">
+                <div class="oe_title">
+                    <label for="code" string="Code"/>
+                    <h1><field name="code" /></h1>
+                    <label for="categ_level" string="Categ Level"/>
+                    <field name="categ_level"/>
+                </div>
+                <group col="4" string="eCommerce">
+                    <field name="categ_public_id"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_view_product_category_tree" model="ir.ui.view">
+        <field name="name">product.category.tree.view.inherit</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="before">
+                <field name="code"/>
+                <field name="name" />
+                <field name="property_account_income_categ_id" optional="show"/>
+                <field name="property_account_expense_categ_id" optional="show"/>
+                <field name="property_cost_method" optional="show"/>
+                <field name="property_valuation" optional="show"/>
+                <field name="property_stock_journal" optional="hide"/>
+                <field name="property_stock_valuation_account_id" optional="hide"/>
+                <field name="property_stock_account_input_categ_id" optional="hide"/>
+                <field name="property_stock_account_output_categ_id" optional="show"/>
+                <field name="create_date" optional="show"/>
+             </field>
+              <xpath expr="//field[@name='name']" position="after">
+                <xpath expr="//field[@name='display_name']" position="move"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_tree_product_public_category" model="ir.ui.view">
+        <field name="name">product.public.category.tree.inherit</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="code_public_cate" />
+            </field>
+        </field>
+    </record>
+    <record id="inherit_view_product_public_category" model="ir.ui.view">
+        <field name="name">product.public.category.view.form.inherit</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="code_public_cate" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_tree_view_pos_category" model="ir.ui.view">
+        <field name="name">pos.category.tree.view.inherit</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="display_name" position="after">
+                <field name="code_pos_cate" />
+            </field>
+        </field>
+    </record>
+    <record id="inherit_form_view_pos_category" model="ir.ui.view">
+        <field name="name">pos.category.view.form.inherit</field>
+        <field name="model">pos.category</field>
+        <field name="inherit_id" ref="point_of_sale.product_pos_category_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="code_pos_cate" />
+            </xpath>
+        </field>
+    </record>
+    
+    
+</odoo>

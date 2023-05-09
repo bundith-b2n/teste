@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_batch_price_wizard_form" model="ir.ui.view">
+        <field name="name">product.batch.price.wizard.form</field>
+        <field name="model">product.batch.price.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Product Batch Price Wizard">
+                <group>
+                    <field name="picking_ids" widget="many2many_tags"/>
+                    <field name="landed_cost_type"/>
+                    <!-- <field name="landed_cost_type" attrs="{'invisible': [('total_landed_amount', '=', 0)]}"/> -->
+                    <!-- <field name="country_import_ids" widget="many2many_tags"/> -->
+                </group>
+                <group>
+                    <field name="landed_cost_ids">
+                        <tree string="Landed Cost"
+                              editable="bottom">
+                            <field name="product_id" />
+                            <field name="name" />
+                            <field name="account_id" />
+                            <field name="price_unit" />
+                        </tree>
+                    </field>
+                </group>
+
+                <div class="row">
+                    <div class="col col-md-6">
+                    </div>
+                    <div class="col col-md-6">
+                        <div style="float: right;">
+                            <field name="total_landed_amount" class="oe_inline"/>
+                        </div>
+                        <label for="total_landed_amount" string="Total Landed Amount" style="float: right;"/>
+                    </div>
+                </div>
+                <footer>
+                    <button name="action_confirm" string="Confirm" type="object"  class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>    
+    </record>
+
+    <record id="action_product_batch_price_wizard" model="ir.actions.act_window">
+        <field name="name">Product Batch Price Wizard</field>
+        <field name="res_model">product.batch.price.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_product_batch_price_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_product_batch_price_wizard"
+        name="Product Batch Price Wizard"
+        action="action_product_batch_price_wizard"
+        parent="stock.menu_stock_warehouse_mgmt"
+        sequence="50"/>
+
+</odoo>

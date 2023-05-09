@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_only_form_view_inherited" model="ir.ui.view">
+        <field name="name">product.template.product.form.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='barcode']" position="after">
+                <button name="generate_barcode" id="generate_barcode_id" type="object" class="oe_highlight"
+                        string="Generate Barcode"/>
+                <field name="model_field" />
+            </xpath>
+            <field name="uom_po_id" position="after">
+                <field name="country_id"/>
+                <field name="country_import_id"/>
+            </field>
+            <field name="country_id" position="after">
+                <field name="serial_no"/>
+            </field>
+            <!-- <field name="to_weight" position="after">
+                <field name="plu" attrs="{'invisible': [('to_weight', '=', False)]}"/>
+            </field> -->
+            <xpath expr="//page[@name='sales']" position="inside">
+                <group>
+                    <group name="discount" string="Discount">
+                        <field name="is_product_discount" />
+                    </group>
+                    <group>
+                    </group>
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='purchase']" position="inside">
+                <group>
+                    <group name="discount" string="Discount">
+                        <field name="is_product_discount" />
+                    </group>
+                    <group>
+                    </group>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='seller_ids']" position="after">
+                <field name="landed_cost_history_ids" readonly="1">
+                    <tree string="Landed Cost">
+                        <field name="po_id"></field>
+                        <field name="date"></field>
+                        <field name="rate" optional="hide"></field>
+                        <field name="currency" optional="show"></field>
+                        <field name="order_cost" optional="show"></field>
+                        <field name="dis_percent" optional="hide"></field>
+                        <field name="dis_amount" optional="show"></field>
+                        <field name="current_cost" optional="hide"></field>
+                        <field name="new_cost" optional="show"></field>
+                        <field name="landed_percent" optional="hide"></field>
+                        <field name="landed_amount" optional="show"></field>
+                        <field name="final_new_cost" optional="show"></field>
+                    </tree>
+                </field>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_inherited" model="ir.ui.view">
+        <field name="name">product.template.product.tree.inherited</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_open_label_layout']" position="after">
+                    <button name="generate_barcode" type="object" string="Generate Barcode" />
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name='decoration-success'>price_status == 'approved'</attribute>
+                    <attribute name='decoration-info'>price_status == 'updated'</attribute>
+                    <attribute name='decoration-danger'>diff_cost_sale &lt; 0</attribute>
+                </xpath>
+                <tree>
+<!--                    <field name="brand_id" optional="hide"/>-->
+                    <field name="diff_cost_sale" optional="show"/>
+                    <field name="price_status" optional="show"/>
+                    <field name="country_id" optional="hide"/>
+                    <field name="country_import_id" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+     
+    
+
+    <record id="lod_country_import_view_tree" model="ir.ui.view">
+        <field name="name">lod.country.import.view.tree</field>
+        <field name="model">lod.country.import</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record id="lod_country_import_view_form" model="ir.ui.view">
+        <field name="name">lod.country.import.view.form</field>
+        <field name="model">lod.country.import</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="margin_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="lod_country_import_action" model="ir.actions.act_window">
+        <field name="name">Country Import</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lod.country.import</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_country_import"
+        name="Country Import"
+        action="lod_country_import_action"
+        parent="stock.menu_product_in_config_stock"
+        sequence="10"/>
+
+
+
+    <record id="lod_margin_config_view_tree" model="ir.ui.view">
+        <field name="name">lod.margin.config.view.tree</field>
+        <field name="model">lod.margin.config</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="name" />
+                <field name="uom_id" />
+                <field name="margin_percent" />
+                <field name="markup_percent" />
+            </tree>
+        </field>
+    </record>
+    <record id="lod_margin_config_view_form" model="ir.ui.view">
+        <field name="name">lod.margin.config.view.form</field>
+        <field name="model">lod.margin.config</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="uom_id" />
+                        <field name="margin_percent" />
+                        <field name="markup_percent" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="lod_margin_config_action" model="ir.actions.act_window">
+        <field name="name">Margin Configuration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lod.margin.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem
+        id="menu_margin_config"
+        name="Margin Configuration"
+        action="lod_margin_config_action"
+        parent="stock.menu_product_in_config_stock"
+        sequence="20"/>
+</odoo>

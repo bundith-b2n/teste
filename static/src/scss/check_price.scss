@@ -1,0 +1,21 @@
+.check_price .detail{
+    font-size: 1.2rem;;
+}
+.check_price .price{
+    font-size: 2rem;
+}
+.check_price .unit{
+    padding: 20px;
+}
+@media screen and (max-width:768px){
+    .check_price .detail{
+        font-size: 0.8rem;
+    }
+    .check_price .price{
+        font-size: 1.5rem;
+    }
+    .check_price .unit{
+        padding: 10px;
+        font-size: 0.6rem;
+    }
+}

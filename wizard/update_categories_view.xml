@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_update_categories_form" model="ir.ui.view">
+        <field name="name">update.categories.wizard.form</field>
+        <field name="model">update.categories.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Categories">
+                <group>
+                    <field name="product_ids">
+                        <tree>
+                            <field name="name" />
+                            <field name="categ_id" string="Product Category"/>
+                            <field name="public_categ_ids" string="Website Category"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button name="update_category" string="Update" type="object"  class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>    
+    </record>
+
+    <record id="action_update_categories" model="ir.actions.act_window">
+        <field name="name">Update Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">update.categories.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_update_categories_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_update_categories"
+        name="Update Categories"
+        parent="stock.menu_stock_inventory_control"
+        action="action_update_categories"
+        sequence="2"/>
+</odoo>
